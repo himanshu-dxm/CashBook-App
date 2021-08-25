@@ -224,7 +224,12 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CashInOut("Cash In")
+                              )
+                          );
                         },
                         child: Text("Cash IN"),
                         style: ButtonStyle(
