@@ -1,4 +1,5 @@
 import 'package:expenses_record/screens/home.dart';
+import 'package:expenses_record/utils/firebaseMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,7 @@ class _CashInOutState extends State<CashInOut> {
 
   DateTime? selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  DatabaseMethods _databaseMethods = new DatabaseMethods();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -43,6 +45,14 @@ class _CashInOutState extends State<CashInOut> {
   Future<Null> _saveData(BuildContext context , int ind) async {
     // ind=1=>Cash In else Cash Out implementation
     print(ind);
+    _databaseMethods.addData(
+        amount: 2000,
+        balance: 2000,
+        date: "Date",
+        time: "time",
+        remarks: "remarks",
+        ind: ind
+    );
     Navigator.pop(context);
   }
 
