@@ -73,6 +73,8 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
+
+          // Search Bar
           Container(
             padding: EdgeInsets.all(8),
             child: TextField(
@@ -83,7 +85,10 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ),
+
           SizedBox(height: 3,),
+
+          //Balance Container
           Container(
             margin: EdgeInsets.all(8),
             padding: EdgeInsets.all(8),
@@ -188,28 +193,20 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          // SizedBox(height: 5,),
+
+          // Items List
           Expanded(
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: 3,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        // color: Color(0xffF3F3F3),
-                        color: Colors.orange,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    height: 120,
-                    width: 360,
-                  ),
-                );
+                return ExpenseTile();
               },
             ),
           ),
+
           SizedBox(height: 5,),
+
+          // Bottom buttons
           Container(
             padding: EdgeInsets.symmetric(vertical: 5),
             child: Row(
@@ -282,3 +279,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+class ExpenseTile extends StatelessWidget {
+
+  const ExpenseTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+      const EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xffF3F3F3),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        height: 120,
+        width: 360,
+      ),
+    );
+  }
+}
+

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "892879988183",
+    "project_id": "expensesrecord-f41c5",
+    "storage_bucket": "expensesrecord-f41c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892879988183:android:25b424a3601bfed24a5792",
+        "android_client_info": {
+          "package_name": "com.example.expenses_record"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892879988183-hdfo0d9m6b3fbrfq068k36iaao305cl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq-3XO845zVGf1kiHujazfWWTfinEwpfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892879988183-hdfo0d9m6b3fbrfq068k36iaao305cl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
