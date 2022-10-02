@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//TODO
+//Readdata and display that and perform +/- operations
+
 class CashInOut extends StatefulWidget {
   final String title;
   CashInOut(this.title);
@@ -14,9 +17,12 @@ class CashInOut extends StatefulWidget {
 class _CashInOutState extends State<CashInOut> {
 
   final _formKey = GlobalKey<FormState>();
-
-  DateTime? selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  DateTime? selectedDate;
+  late TimeOfDay selectedTime;
+  void initState() {
+    selectedDate = DateTime.now();
+    selectedTime = TimeOfDay(hour: selectedDate!.hour, minute: selectedDate!.minute);
+  }
   DatabaseMethods _databaseMethods = new DatabaseMethods();
 
   TextEditingController _amountTextController = new TextEditingController();
@@ -59,6 +65,7 @@ class _CashInOutState extends State<CashInOut> {
           remarks: _remarksTextController.text,
           ind: ind
       );
+
       Navigator.pop(context);
       print("Data Validated and Uploaded!");
     } else {
