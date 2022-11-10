@@ -1,22 +1,28 @@
 import 'package:expenses_record/screens/daily_page.dart';
 import 'package:expenses_record/screens/home.dart';
 import 'package:expenses_record/screens/rootPage.dart';
+import 'package:expenses_record/utils/realtimeDB.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  RealtimeDB ob = new RealtimeDB();
+  await ob.readData();
+  // runApp(MyApp());
 }
+// Future<FirebaseApp> _initializeFirebase() async {
+//   debugPrint("Initializing Firebase");
+//   FirebaseApp firebaseApp = await Firebase.initializeApp();
+//   return firebaseApp;
+// }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
 
-    Future<FirebaseApp> _initializeFirebase() async {
-      FirebaseApp firebaseApp = await Firebase.initializeApp();
-      return firebaseApp;
-    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -25,21 +31,22 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: SafeArea(
-        child: FutureBuilder(
-          future: _initializeFirebase(),
-          builder: (context,snapshot) {
-            if(snapshot.hasError) {
-              return Text("Error Initializing Firebase");
-            } else if(snapshot.connectionState == ConnectionState.done) {
-              return RootApp();
-            }
-            return CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.orange
-              ),
-            );
-          },
-        ),
+        child: RootApp(),
+        // child: FutureBuilder(
+        //   future: _initializeFirebase(),
+        //   builder: (context,snapshot) {
+        //     if(snapshot.hasError) {
+        //       return Text("Error Initializing Firebase");
+        //     } else if(snapshot.connectionState == ConnectionState.done) {
+        //       return RootApp();
+        //     }
+        //     return CircularProgressIndicator(
+        //       valueColor: AlwaysStoppedAnimation<Color>(
+        //         Colors.orange
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }
