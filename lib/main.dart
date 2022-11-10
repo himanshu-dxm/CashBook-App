@@ -2,6 +2,7 @@ import 'package:expenses_record/screens/daily_page.dart';
 import 'package:expenses_record/screens/home.dart';
 import 'package:expenses_record/screens/rootPage.dart';
 import 'package:expenses_record/utils/realtimeDB.dart';
+import 'package:expenses_record/widget/DatePickerCustom.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   RealtimeDB ob = new RealtimeDB();
-  await ob.readData();
-  // runApp(MyApp());
+  // await ob.readData();
+  await ob.writeData();
+  runApp(MyApp());
 }
 // Future<FirebaseApp> _initializeFirebase() async {
 //   debugPrint("Initializing Firebase");
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: SafeArea(
+        // child: DatePickerCustom(),
         child: RootApp(),
         // child: FutureBuilder(
         //   future: _initializeFirebase(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../json/daily_json.dart';
 import '../json/day_month.dart';
@@ -10,7 +11,16 @@ class DailyPage extends StatefulWidget {
 }
 
 class _DailyPageState extends State<DailyPage> {
-  int activeDay = 3;
+
+  DateTime now = DateTime.now();
+  late DateTime lastDayOfMonth;
+  late int activeDay;
+  @override
+  void initState() {
+    super.initState();
+    lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+    activeDay = now.day-1;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +45,7 @@ class _DailyPageState extends State<DailyPage> {
             ]),
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 60, right: 20, left: 20, bottom: 25),
+                  top: 20, right: 20, left: 20, bottom: 25),
               child: Column(
                 children: [
                   Row(
@@ -56,54 +66,107 @@ class _DailyPageState extends State<DailyPage> {
                     height: 25,
                   ),
                   Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(7, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              activeDay = index;
-                            });
-                          },
-                          child: Container(
-                            width: (MediaQuery.of(context).size.width - 40) / 7,
-                            child: Column(
-                              children: [
-                                Text(
-                                  days[index]['label'],
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      color: activeDay == index
-                                          ? primary
-                                          : Colors.transparent,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: activeDay == index
-                                              ? primary
-                                              : black.withOpacity(0.1))),
-                                  child: Center(
-                                    child: Text(
-                                      days[index]['day'],
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w600,
-                                          color: activeDay == index
-                                              ? white
-                                              : black),
-                                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'November',
+                        ),
+                        GestureDetector(
+                            onTap: (){
+                              //TODO : Change Months Option
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Functionality Not added yet!")));
+                            },
+                            child: Icon(Icons.arrow_drop_down)
+                        ),
+
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '2022',
+                        ),
+                        GestureDetector(
+                            onTap: (){
+                              //TODO : Change Year Option
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Functionality Not added yet")));
+                            },
+                            child: Icon(Icons.arrow_drop_down)
+                        ),
+
+                      ],
+                    ),
+                  ],
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const ClampingScrollPhysics(),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                            lastDayOfMonth.day,
+                            // 7,
+                                (index) {
+                              final currentDate = lastDayOfMonth.add(
+                                Duration(days:index -1)
+                              );
+                              final dayName = DateFormat('E').format(currentDate);
+                          return GestureDetector(
+                            onTap: () {
+
+                              setState(() {
+                                activeDay = index;
+                              });
+                              print(activeDay);
+                            },
+                            child: Container(
+                              width: (MediaQuery.of(context).size.width - 40) / 7,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    dayName.substring(0,3),
+                                    // days[index]['label'],
+                                    style: TextStyle(fontSize: 10),
                                   ),
-                                )
-                              ],
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: activeDay == index
+                                            ? primary
+                                            : Colors.transparent,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: activeDay == index
+                                                ? primary
+                                                : black.withOpacity(0.1))),
+                                    child: Center(
+                                      child: Text(
+                                        "${index+1}",
+                                        // days[index]['day'],
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w600,
+                                            color: activeDay == index
+                                                ? white
+                                                : black),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }))
+                          );
+                        })),
+                  )
                 ],
               ),
             ),
