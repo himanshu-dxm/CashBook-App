@@ -1,5 +1,9 @@
+import 'package:expenses_record/models/DateTime.dart';
+import 'package:expenses_record/models/Transcations.dart';
+import 'package:expenses_record/utils/realtimeDB.dart';
 import 'package:flutter/material.dart';
 
+import '../json/day_month.dart';
 import '../utils/Utilities.dart';
 
 
@@ -14,6 +18,8 @@ class AddTransactionPage extends StatefulWidget {
 
 class _AddTransactionPageState extends State<AddTransactionPage> {
 
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController _titleController = new TextEditingController();
   TextEditingController _amountController = new TextEditingController();
   // TextEditingController _categoryController = new TextEditingController();
@@ -23,6 +29,32 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   TimeOfDay time= TimeOfDay.now();
 
   String? dropDownValue = list.last;
+
+  Future<void> addData() async {
+    print(date.month);
+    MyDateTime myDateTime = new MyDateTime(
+        date: date.day,
+        month: months[date.month-1],
+        day: week[date.weekday-1],
+        year: date.year,
+        hour: time.hour,
+        min: time.minute
+    );
+    // print("My Date Time\n${DateTime.now().millisecondsSinceEpoch}");
+    String transactionId = "${date.toString().substring(0,10)} ${time.toString().substring(10,15)}";
+    print("Transaction Id:$transactionId");
+    Transactions transaction = new Transactions(
+        transactionId: transactionId,
+        title: _titleController.text,
+        amount: double.parse(_amountController.text),
+        category: dropDownValue??"Default",
+        dateTime: myDateTime,
+        timestamp: DateTime.now().millisecondsSinceEpoch.toString()
+    );
+    // print("My Transaction\n$transaction");
+    RealtimeDB obj = new RealtimeDB();
+    await obj.writeData(transaction);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +67,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         child: Container(
           margin: EdgeInsets.all(8),
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +83,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 ),
                 TextFormField(
                   controller: _titleController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Some Value';
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
                 SizedBox(height: 8,),
                 Text(
@@ -63,6 +103,20 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 TextFormField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
+                  validator: (value) {
+                    double val = 0.0;
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Some Value';
+                    } else {
+                      val=double.parse(value);
+                    }
+                    if(val < 0) {
+                      return 'It cannot be negative';
+                    } else if(val == 0.0) {
+                      return 'You have entered Zero';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 8,),
                 Text(
@@ -136,13 +190,14 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                        '${date.toString().substring(0,10)} \n\nClick to open Calendar',
+                        '${date.toString().substring(0,10)} \nClick to open Calendar',
                       style: TextStyle(
                         fontSize: 18
                       ),
                     ),
                   ),
                 ),
+                SizedBox(height: 8,),
                 InkWell(
                   onTap: () async {
                     final TimeOfDay? picked = await showTimePicker(
@@ -160,10 +215,14 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                         time = picked;
                       });
                   },
-                  child: Text(
-                    '${time.toString().substring(10,15)} \n\nClick to open Clock',
-                    style: TextStyle(
-                        fontSize: 18
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      // ${time.toString().substring(10,15)}
+                      'Time : ${time.format(context)}\nClick to open Clock',
+                      style: TextStyle(
+                          fontSize: 18
+                      ),
                     ),
                   ),
                 ),
@@ -171,7 +230,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 Container(
                   alignment: Alignment.center,
                   child: MaterialButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      if(_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Uploading Data'))
+                        );
+                        await addData().then((value) => Navigator.pop(context));
+                      }
 
                     },
                     child: Text('Submit'),

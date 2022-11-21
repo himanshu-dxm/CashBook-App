@@ -69,7 +69,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   ),
                   Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(months.length, (index) {
+                      children: List.generate(months1.length, (index) {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -81,7 +81,7 @@ class _BudgetPageState extends State<BudgetPage> {
                             child: Column(
                               children: [
                                 Text(
-                                  months[index]['label'],
+                                  months1[index]['label'],
                                   style: TextStyle(fontSize: 10),
                                 ),
                                 SizedBox(
@@ -101,7 +101,7 @@ class _BudgetPageState extends State<BudgetPage> {
                                     padding: const EdgeInsets.only(
                                         left: 12, right: 12, top: 7, bottom: 7),
                                     child: Text(
-                                      months[index]['day'],
+                                      months1[index]['day'],
                                       style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w600,

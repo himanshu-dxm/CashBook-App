@@ -33,4 +33,9 @@ class MyDateTime {
     "hour":hour,
     "min":min,
   };
+
+  @override
+  String toString() {
+    return "Date: $date\nMonth: $month\nDay: $day\nYear: $year\nHour: $hour\nMin: $min";
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:expenses_record/json/day_month.dart';
 import 'package:expenses_record/screens/daily_page.dart';
 import 'package:expenses_record/screens/home.dart';
 import 'package:expenses_record/screens/rootPage.dart';
@@ -9,9 +10,10 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // RealtimeDB ob = new RealtimeDB();
-  // await ob.readData();
+  RealtimeDB ob = new RealtimeDB();
+  await ob.readByTransactionId("2022-11-20");
   // await ob.writeData();
+  // print(months[9]);
   runApp(MyApp());
 }
 // Future<FirebaseApp> _initializeFirebase() async {

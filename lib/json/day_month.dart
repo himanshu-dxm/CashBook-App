@@ -7,7 +7,7 @@ List days = [
   {"label": "Fri", "day": "3"},
   {"label": "Sat", "day": "4"},
 ];
-List months = [
+List months1 = [
   {"label": "2023", "day": "Jan"},
   {"label": "2023", "day": "Feb"},
   {"label": "2023", "day": "Mar"},
@@ -26,11 +26,25 @@ List years = [
   '2023',
 ];
 List week = [
-  'Sun',
   'Mon',
   'Tue',
   'Wed',
   'Thu',
   'Fri',
   'Sat',
+  'Sun'
+];
+List months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
 ];
