@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  RealtimeDB ob = new RealtimeDB();
+  // RealtimeDB ob = new RealtimeDB();
   // await ob.readData();
-  await ob.writeData();
+  // await ob.writeData();
   runApp(MyApp());
 }
 // Future<FirebaseApp> _initializeFirebase() async {

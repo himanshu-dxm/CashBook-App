@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../json/daily_json.dart';
-import '../json/day_month.dart';
 import '../utils/Utilities.dart';
 
 class DailyPage extends StatefulWidget {
@@ -303,3 +302,4 @@ class _DailyPageState extends State<DailyPage> {
     );
   }
 }
+

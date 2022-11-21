@@ -1,3 +1,4 @@
+import 'package:expenses_record/screens/addTransaction.dart';
 import 'package:expenses_record/screens/profilePage.dart';
 import 'package:expenses_record/screens/statsPage.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,12 @@ class _RootAppState extends State<RootApp> {
     StatsPage(),
     BudgetPage(),
     ProfilePage(),
+    AddTransactionPage(),
     // CreatBudgetPage()
   ];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -40,7 +41,9 @@ class _RootAppState extends State<RootApp> {
         bottomNavigationBar: getFooter(),
         floatingActionButton: FloatingActionButton(
             onPressed: () {
-              selectedTab(4);
+              // print("+ tapped");
+              // selectedTab(4);
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>AddTransactionPage()));
             },
             child: Icon(
               Icons.add,
@@ -91,4 +94,5 @@ class _RootAppState extends State<RootApp> {
       pageIndex = index;
     });
   }
+
 }
